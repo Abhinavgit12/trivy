@@ -1,0 +1,17 @@
+pipeline {
+   agent any
+   stages {
+       stage('git checkout') {
+            steps {
+                  sh 'docker build -t core-app:1.1'
+                  
+            }
+        }
+        stage('trivy') {
+            steps {
+                
+                   sh 'trivy image --no-progress --exit-code 1 --severity CRITICAL core-app:1.1'
+            }
+        }
+   }
+}
